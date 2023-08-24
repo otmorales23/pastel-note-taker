@@ -1,2 +1,1 @@
-# pastel-notes
-Express.js note-taking app
+# Note Taker Starter Code
