@@ -10,7 +10,6 @@ const saveNotes = () => {
     fs.writeFileSync(path.resolve(__dirname, "../db/db.json"), JSON.stringify(notes))
 }
 
-
 router.get("/notes", (req, res) => {
 
     let allNotes = notes.map((note, index) => ({
