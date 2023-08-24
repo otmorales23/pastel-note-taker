@@ -1,10 +1,10 @@
 const fs = require("fs")
 const path = require('path');
-const notes = require("../db/db.json")
+const notesData = require("../db/db.json")
 const express = require("express")
 const router = express.Router()
 
-// let notes = notesData
+let notes = notesData
 
 const saveNotes = () => {
     fs.writeFileSync(path.resolve(__dirname, "../db/db.json"), JSON.stringify(notes))
@@ -12,18 +12,26 @@ const saveNotes = () => {
 
 
 router.get("/notes", (req, res) => {
-    console.log("Hello");
-    res.json(notes)
+
+    let allNotes = notes.map((note, index) => ({
+        ...note,
+        id: index
+    })
+    )
+    console.log(allNotes);
+    res.json(allNotes)
 })
 
 router.post("/notes", (req, res) => {
     notes.push(req.body)
-    saveNotes(notes)
+    saveNotes()
     res.json(notes)
 })
 
 router.delete("/notes/:id", (req, res) => {
-    res.json(notes)
+    notes = notes.filter((note, index) => index != req.params.id)
+    saveNotes()
+    res.json()
 })
 
 module.exports = router;
